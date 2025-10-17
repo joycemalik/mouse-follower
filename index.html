@@ -7,75 +7,96 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0; /* Default light background */
-            transition: background-color 0.5s ease;
+            background-color: #f0f0f0; /* Default background */
+            transition: background-color 0.5s ease; /* Smooth color change */
+            cursor: crosshair;
+            overflow: hidden; /* Prevent scrollbars if fixed elements are used */
             color: #333;
         }
-        #coordinates {
-            font-size: 2.2em;
-            font-weight: bold;
+        h1 {
+            color: #222;
+            margin-bottom: 10px;
+        }
+        p {
+            margin-top: 0;
             margin-bottom: 30px;
-            color: #007bff; /* Primary color */
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 15px 30px;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            min-width: 300px;
+            font-size: 1.1em;
+        }
+        #coords-display {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #2c3e50;
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 10px 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            min-width: 120px; /* Ensure consistent width */
             text-align: center;
         }
-        #colorButton {
-            padding: 12px 25px;
-            font-size: 1.1em;
+        #color-changer-button {
+            padding: 15px 30px;
+            font-size: 1.2em;
             cursor: pointer;
             border: none;
-            border-radius: 6px;
-            background-color: #28a745; /* Success green */
+            border-radius: 8px;
+            background-color: #3498db;
             color: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            outline: none; /* Remove focus outline */
         }
-        #colorButton:hover {
-            background-color: #218838;
+        #color-changer-button:hover {
+            background-color: #2980b9;
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.25);
         }
-        #colorButton:active {
+        #color-changer-button:active {
             transform: translateY(0);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            background-color: #2574a9;
         }
     </style>
 </head>
 <body>
-    <div id="coordinates">
-        Mouse X: 0, Y: 0
+    <div id="coords-display">
+        X: 0, Y: 0
     </div>
-    <button id="colorButton">Change Background Color</button>
+
+    <h1>Mouse Follower & Color Game</h1>
+    <p>Move your mouse to track coordinates. Click the button to change the background!</p>
+    <button id="color-changer-button">Change Background Color</button>
 
     <script>
-        const coordinatesDiv = document.getElementById('coordinates');
-        const colorButton = document.getElementById('colorButton');
+        const coordsDisplay = document.getElementById('coords-display');
+        const colorChangerButton = document.getElementById('color-changer-button');
 
-        // Function to update mouse coordinates
+        // Mouse Follower functionality
         document.addEventListener('mousemove', (event) => {
-            coordinatesDiv.textContent = `Mouse X: ${event.clientX}, Y: ${event.clientY}`;
+            const x = event.clientX;
+            const y = event.clientY;
+            coordsDisplay.textContent = `X: ${x}, Y: ${y}`;
         });
 
-        // Function to generate a random RGB color
-        function getRandomRgbColor() {
+        // Random Background Color Game functionality
+        colorChangerButton.addEventListener('click', () => {
+            // Generate random RGB values (0-255)
             const r = Math.floor(Math.random() * 256);
             const g = Math.floor(Math.random() * 256);
             const b = Math.floor(Math.random() * 256);
-            return `rgb(${r}, ${g}, ${b})`;
-        }
 
-        // Event listener for the color change button
-        colorButton.addEventListener('click', () => {
-            document.body.style.backgroundColor = getRandomRgbColor();
+            // Apply the new random color to the body's background
+            document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
         });
     </script>
 </body>
