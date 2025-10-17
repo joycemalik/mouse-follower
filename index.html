@@ -74,12 +74,20 @@
     </div>
 
     <h1>Mouse Follower & Color Game</h1>
-    <p>Move your mouse to track coordinates. Click the button to change the background!</p>
+    <p>Move your mouse to track coordinates. Click the button, or anywhere else on the page, to change the background!</p>
     <button id="color-changer-button">Change Background Color</button>
 
     <script>
         const coordsDisplay = document.getElementById('coords-display');
         const colorChangerButton = document.getElementById('color-changer-button');
+
+        // Function to generate a random RGB color
+        function getRandomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
 
         // Mouse Follower functionality
         document.addEventListener('mousemove', (event) => {
@@ -88,15 +96,18 @@
             coordsDisplay.textContent = `X: ${x}, Y: ${y}`;
         });
 
-        // Random Background Color Game functionality
+        // Random Background Color Game functionality (button click)
         colorChangerButton.addEventListener('click', () => {
-            // Generate random RGB values (0-255)
-            const r = Math.floor(Math.random() * 256);
-            const g = Math.floor(Math.random() * 256);
-            const b = Math.floor(Math.random() * 256);
+            document.body.style.backgroundColor = getRandomColor();
+        });
 
-            // Apply the new random color to the body's background
-            document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+        // New: Background color change on any page click (excluding the button itself)
+        document.addEventListener('click', (event) => {
+            // Prevent double color change if the click originated from the button
+            if (event.target === colorChangerButton) {
+                return; // The button's own handler will take care of this click
+            }
+            document.body.style.backgroundColor = getRandomColor();
         });
     </script>
 </body>
