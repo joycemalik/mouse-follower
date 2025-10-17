@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Follower & Color Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0; /* Default light background */
+            transition: background-color 0.5s ease;
+            color: #333;
+        }
+        #coordinates {
+            font-size: 2.2em;
+            font-weight: bold;
+            margin-bottom: 30px;
+            color: #007bff; /* Primary color */
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 15px 30px;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            min-width: 300px;
+            text-align: center;
+        }
+        #colorButton {
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            background-color: #28a745; /* Success green */
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        #colorButton:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        #colorButton:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="coordinates">
+        Mouse X: 0, Y: 0
+    </div>
+    <button id="colorButton">Change Background Color</button>
+
+    <script>
+        const coordinatesDiv = document.getElementById('coordinates');
+        const colorButton = document.getElementById('colorButton');
+
+        // Function to update mouse coordinates
+        document.addEventListener('mousemove', (event) => {
+            coordinatesDiv.textContent = `Mouse X: ${event.clientX}, Y: ${event.clientY}`;
+        });
+
+        // Function to generate a random RGB color
+        function getRandomRgbColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        // Event listener for the color change button
+        colorButton.addEventListener('click', () => {
+            document.body.style.backgroundColor = getRandomRgbColor();
+        });
+    </script>
+</body>
+</html>
